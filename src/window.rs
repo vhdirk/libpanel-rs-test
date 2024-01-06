@@ -2,8 +2,10 @@ use adw::subclass::prelude::*;
 use gtk::{gio, glib};
 
 mod imp {
-    use adw::prelude::AdwApplicationWindowExt;
-    use gtk::prelude::{ButtonExt, WidgetExt, ToggleButtonExt};
+    use adw::prelude::{AdwApplicationWindowExt, AdwApplicationExt};
+    use glib::{clone, Cast};
+    use gtk::prelude::{ButtonExt, WidgetExt, ToggleButtonExt, GtkWindowExt};
+    use panel::subclass::workspace::WorkspaceImpl;
 
     use super::*;
 
@@ -14,7 +16,7 @@ mod imp {
     impl ObjectSubclass for Window {
         const NAME: &'static str = "ExampleWindow";
         type Type = super::Window;
-        type ParentType = adw::ApplicationWindow;
+        type ParentType = panel::Workspace;
     }
 
     impl ObjectImpl for Window {
@@ -32,17 +34,17 @@ mod imp {
                 .build();
 
 
-            button.connect_clicked(|btn| {
-
+            button.connect_clicked(clone!(@weak self as this => move |btn| {
+                let sm = this.obj().application().unwrap().downcast_ref::<adw::Application>().unwrap().style_manager();
                 if btn.is_active() {
                     btn.set_label("Set light");
-                    adw::StyleManager::default().set_color_scheme(adw::ColorScheme::ForceDark);
+                    sm.set_color_scheme(adw::ColorScheme::ForceDark);
                 } else {
                     btn.set_label("Set dark");
-                    adw::StyleManager::default().set_color_scheme(adw::ColorScheme::ForceLight);
+                    sm.set_color_scheme(adw::ColorScheme::ForceLight);
 
                 };
-            });
+            }));
 
 
             view.set_content(Some(&button));
@@ -61,11 +63,12 @@ mod imp {
     impl AdwWindowImpl for Window {}
     impl ApplicationWindowImpl for Window {}
     impl AdwApplicationWindowImpl for Window {}
+    impl WorkspaceImpl for Window {}
 }
 
 glib::wrapper! {
         pub struct Window(ObjectSubclass<imp::Window>)
-                @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow, adw::Window, adw::ApplicationWindow, //, panel::Workspace,
+                @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow, adw::Window, adw::ApplicationWindow, panel::Workspace,
                 @implements gtk::Accessible, gio::ActionGroup, gio::ActionMap, gtk::Buildable, gtk::ConstraintTarget, gtk::Native, gtk::Root, gtk::ShortcutManager;
 }
 

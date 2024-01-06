@@ -1,21 +1,24 @@
-use adw;
+use adw::{self, prelude::AdwApplicationExt};
 use gtk::{gio, glib, glib::clone, prelude::*, subclass::prelude::*};
 
 mod imp {
     use adw::subclass::application::AdwApplicationImpl;
+    use panel::{subclass::application::PanelApplicationImpl, Workbench};
 
     use crate::window::Window;
 
     use super::*;
 
     #[derive(Debug, Default)]
-    pub struct Application {}
+    pub struct Application {
+        pub workbench: Workbench,
+    }
 
     #[glib::object_subclass]
     impl ObjectSubclass for Application {
         const NAME: &'static str = "Example";
         type Type = super::Application;
-        type ParentType = adw::Application;
+        type ParentType = panel::Application;
     }
 
     impl ObjectImpl for Application {}
@@ -29,22 +32,18 @@ mod imp {
 
         fn startup(&self) {
             self.parent_startup();
-            println!("Initing libadwaita");
-            adw::init().expect("Could not init libadwaita");
         }
     }
 
-    impl GtkApplicationImpl for Application {
-        fn window_removed(&self, window: &gtk::Window) {
-            self.parent_window_removed(window);
-        }
-    }
+    impl GtkApplicationImpl for Application {}
     impl AdwApplicationImpl for Application {}
+    impl PanelApplicationImpl for Application {}
+
 }
 
 glib::wrapper! {
         pub struct Application(ObjectSubclass<imp::Application>)
-        @extends gio::Application, gtk::Application, adw::Application,
+        @extends gio::Application, gtk::Application, adw::Application, panel::Application,
         @implements gio::ActionMap, gio::ActionGroup;
 }
 

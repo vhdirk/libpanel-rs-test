@@ -3,18 +3,6 @@
 version = 3
 
 [[package]]
-name = "adwstyletoggle"
-version = "0.1.0"
-dependencies = [
- "gdk4",
- "gio",
- "glib",
- "gtk4",
- "libadwaita",
- "pango",
-]
-
-[[package]]
 name = "anyhow"
 version = "1.0.79"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -458,9 +446,41 @@ dependencies = [
 
 [[package]]
 name = "libc"
-version = "0.2.151"
+version = "0.2.152"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "302d7ab3130588088d277783b1e2d2e10c9e9e4a16dd9050e6ec93fb3e7048f4"
+checksum = "13e3bf6590cbc649f4d1a3eefc9d5d6eb746f5200ffb04e5e142700b8faa56e7"
+
+[[package]]
+name = "libpanel"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f90c367dcd0b5972ff50fed72deb4ec22946cb0346e9be5bd357afe8d097f392"
+dependencies = [
+ "futures-core",
+ "gdk4",
+ "gio",
+ "glib",
+ "gtk4",
+ "libadwaita",
+ "libc",
+ "libpanel-sys",
+]
+
+[[package]]
+name = "libpanel-sys"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "daf15707b11148fe5f084c7ee2dcd109accd24866357c0bf563d11d4f4b28246"
+dependencies = [
+ "gdk4-sys",
+ "gio-sys",
+ "glib-sys",
+ "gobject-sys",
+ "gtk4-sys",
+ "libadwaita-sys",
+ "libc",
+ "system-deps",
+]
 
 [[package]]
 name = "memchr"
@@ -482,6 +502,19 @@ name = "once_cell"
 version = "1.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3fdb12b2476b595f9358c5161aa467c2438859caa136dec86c26fdd2efe17b92"
+
+[[package]]
+name = "panel_test"
+version = "0.1.0"
+dependencies = [
+ "gdk4",
+ "gio",
+ "glib",
+ "gtk4",
+ "libadwaita",
+ "libpanel",
+ "pango",
+]
 
 [[package]]
 name = "pango"
@@ -795,9 +828,9 @@ checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
 
 [[package]]
 name = "winnow"
-version = "0.5.32"
+version = "0.5.33"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8434aeec7b290e8da5c3f0d628cb0eac6cabcb31d14bb74f779a08109a5914d6"
+checksum = "b7520bbdec7211caa7c4e682eb1fbe07abe20cee6756b6e00f537c82c11816aa"
 dependencies = [
  "memchr",
 ]

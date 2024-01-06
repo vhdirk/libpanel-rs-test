@@ -1,5 +1,5 @@
 [package]
-name = "adwstyletoggle"
+name = "panel_test"
 version = "0.1.0"
 edition = "2021"
 
@@ -12,5 +12,5 @@ gio = { version = "^0.18" }
 pango = { version = "^0.18" }
 gdk = { package = "gdk4", version = "^0.7", features = ["v4_12"] }
 gtk = { package = "gtk4", version = "^0.7", features = ["v4_12"] }
-
+panel = { package = "libpanel", version = "0.3" }
 adw = { package = "libadwaita", version = "0.5", features = ["v1_4"] }
